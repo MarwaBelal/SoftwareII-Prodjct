@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Add store to the platform</title>
+</head>
+<body>
+	<form method="post" th:action="@{/AddStore}" th:object="${store}">
+		<p>Name</p><input type="text" th:field="*{name}" />
+		<br></br>
+		<p>Type</p><input type="text" th:field="*{type}"/>
+		<br></br>
+		<p>Address</p><input type="text" th:field="*{address}" />
+		<br></br>
+		<p>Link</p><input type="text" th:field="*{link}" />
+		<br></br>
+		<input type="submit" value="submit" />
+		<br></br>
+	</form>
+
+</body>
+</html>

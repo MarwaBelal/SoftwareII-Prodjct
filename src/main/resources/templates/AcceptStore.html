@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Accept Store</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<td>Id</td>
+			<td>Store Name</td>
+			<td>Type</td>
+		</tr>
+		<tr th:each="store :${stores}">
+			<td th:text="${store.id}">id </td>
+			<td th:text="${store.name}">name </td>
+			<td th:text="${store.type}">type </td>
+		</tr>
+		
+	</table>
+	<form method="post" th:action="@{/AcceptStore}">
+		<p>ID</p><input type="number" name="id"/>
+		<br></br>
+		<input type="submit" value="submit" />
+		<br></br>
+		
+	</form>
+</body>
+</html>
