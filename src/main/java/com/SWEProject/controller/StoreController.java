@@ -58,8 +58,6 @@ public class StoreController {
 			}
 		}
 		repo.save(newStore);
-		
-		
 		return "AcceptStore";
 	}
 }
