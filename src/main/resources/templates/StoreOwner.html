@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>STORE OWNER ACCOUNT</title>
+</head>
+<body>
+	<a href="AddProductToStore">ADD PRODUCT TO STORE</a><br></br>
+	<a href="AddStore">ADD STORE</a><br></br>
+	<a href="">BUY</a><br></br>
+	<a href="Welcome">LOG OUT</a><br></br>
+
+	
+	
+	
+	
+	<form  action= "ShowStatistics" method="get" id = "my_form" th:action ="@{/Show-Stores1}" ></form>
+	
+    <button type="submit" form="my_form" >Show Statistics</button>
+	
+</body>
+</html>

@@ -1,21 +1,16 @@
 package com.SWEProject.Entities;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Product {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
 	private String name;
 	private String category;
 	private String type;
 	private double priceUpperRange;
 	private double priceLowerRange;
-	private double price;
 	public Product() {
 		name="";
 		category="";
@@ -31,12 +26,7 @@ public class Product {
 		this.priceUpperRange = priceUpperRange;
 		this.priceLowerRange = priceLowerRange;
 	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	
 	public String getName() {
 		return name;
 	}
@@ -67,11 +57,4 @@ public class Product {
 	public void setPriceLowerRange(double priceLowerRange) {
 		this.priceLowerRange = priceLowerRange;
 	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	
 }

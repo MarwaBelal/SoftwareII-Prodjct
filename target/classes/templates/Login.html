@@ -3,14 +3,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Login</title>
+<script>
+
+function validate(){
+	var email=document.form1.email.value;
+	var pass=document.form1.password.value;
+	if( email==""){
+		alert("Enter your email please!");
+		return false;
+	}
+	if(pass==""){
+		alert("Enter your password please!");
+		return false;
+	}
+	return true;
+}
+</script>
 </head>
 <body>
-<form  method="post" th:action="@{/Login}" th:object="${user}">
-<p>Email</p><input type="text" th:field="*{email}"/>
+<form  method="post" th:action="@{/Login}"  name="form1" onSubmit="return validate()">
+<p>Email</p><input type="text" name="email"/>
 <br></br>
-<p>Password</p><input type="password" th:field="*{password}"/>
+<p>Password</p><input type="password" name="password"/>
 <br></br>
 <input type="submit" value="submit"/>
 </form>
+
 </body>
 </html>

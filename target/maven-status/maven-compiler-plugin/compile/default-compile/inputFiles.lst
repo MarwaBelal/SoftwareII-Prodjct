@@ -1,1 +1,21 @@
-C:\Users\sony\Documents\workspace-sts-3.9.2.RELEASE\SWEProject\src\main\java\com\SWEProject\MainController.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\Brand.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\Store.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\controller\BrandController.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\controller\ProductController.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\Administrator.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\Product.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\StoresProducts.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Repositories\StoresProductsRepository.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\MainController.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Repositories\ProductRepository.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\controller\UserController.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\User.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Repositories\BrandRepository.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Repositories\SuggestedStoreRepository.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\controller\StartController.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\controller\StoreController.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Repositories\StoreRepository.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Repositories\UserRepository.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\SuggestedStore.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\NormalUser.java
+C:\Users\user\Desktop\SWEProject (2)\SWEProject\src\main\java\com\SWEProject\Entities\StoreOwner.java

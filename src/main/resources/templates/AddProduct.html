@@ -3,14 +3,54 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>Add Product</title>
+<script>
+
+function validate(){
+	var Name=document.form1.name.value;
+	var cat=document.form1.category.value;
+	var type=document.form1.type.value;
+	var uprice=document.form1.priceUpperRange.value;
+	var lprice=document.form1.priceLowerRange.value;
+	if( Name==""){
+		alert("Enter product name please!");
+		return false;
+	}
+	if( cat==""){
+		alert("Enter product category please!");
+		return false;
+	}
+	if( type==""){
+		alert("Enter product type please!");
+		return false;
+	}
+	if(uprice==""){
+		alert("Enter product upper range price please!");
+		return false;
+	}
+	var pat=/[0-9]/;
+	if(!pat.test(uprice)){
+		alert("The price must be a number");
+		return false;
+	}
+	if(lprice==""){
+		alert("Enter product lower range price please!");
+		return false;
+	}
+	if(!pat.test(lprice)){
+		alert("The price must be a number");
+		return false;
+	}
+	return true;
+}
+</script>
 </head>
 <body>
-<form method="post" th:action ="@{/AddProduct}" th:object="${product}">
+<form action="Admin" method="post" th:action ="@{/AddProduct}" th:object="${product}" name="form1" onSubmit="return validate()">
 		<p>Name</p><input type="text" th:field="*{name}"/><br></br>
 		<p>Category</p><input type="text" th:field="*{category}"/><br></br>
 		<p>Type</p><input type="text" th:field="*{type}"/><br></br>
-		<p>Lower Range Price</p><input type="number" th:field="*{priceUpperRange}"/><br></br>
-		<p>Upper Range Price</p><input type="text" th:field="*{priceLowerRange}"/><br></br>
+		<p>Lower Range Price</p><input type="number" th:field="*{priceLowerRange}"/><br></br>
+		<p>Upper Range Price</p><input type="number" th:field="*{priceUpperRange}"/><br></br>
 		<input type="submit" value="submit"/>
 	</form>
 </body>

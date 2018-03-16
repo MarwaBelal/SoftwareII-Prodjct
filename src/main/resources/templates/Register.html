@@ -3,13 +3,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Register</title>
+<script>
+
+function validate(){
+	var Name=document.form1.username.value;
+	var email=document.form1.email.value;
+	var pass=document.form1.password.value;
+	if( Name==""){
+		alert("Enter your name please!");
+		return false;
+	}
+	if(email==""){
+		alert("Enter your email please!");
+		return false;
+	}
+	if( pass==""){
+		alert("Enter your password please!");
+		return false;
+	}
+	var pat=/[0-9]/;
+	if(!pat.test(pass)){
+		alert("The password must contain a number");
+		return false;
+	}
+	return true;
+}
+</script>
 </head>
 <body>
-	<form method="post" th:action="@{/Register}" th:object="${user}">
+	<form method="post" th:action="@{/Register}" th:object="${user}" name="form1" onSubmit="return validate()">
 		<p>UserName</p><input type="text" th:field="*{username}" />
 		<br></br>
 		<p>Email</p><input type="text" th:field="*{email}"/>
 		<br></br>
+		<input type="radio" name="usertype" th:field="*{type}" value="normaluser" /> Normal User<br></br>
+  		<input type="radio" name="usertype" th:field="*{type}" value="storeowner" /> Store Owner<br></br>
 		<p>Password</p><input type="password" th:field="*{password}" />
 		<br></br>
 		<input type="submit" value="submit" />

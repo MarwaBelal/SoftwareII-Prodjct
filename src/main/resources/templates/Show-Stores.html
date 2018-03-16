@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Add product App</title>
+</head>
+<body>
+
+<form  action= "ShowProducts" method="get" id = "my_form" th:action ="@{/ShowProducts}" th:object="${store}"></form>
+
+<table border="1">
+<tr>
+	    <td>name</td>
+	    <td>type</td>
+	    <td>address</td>
+	    <td>link</td>
+	</tr>
+	<tr th:each="store : ${stores}" >
+		<td th:text ="${store.name}" ></td>
+	        <td th:text ="${store.type}"></td>
+		<td th:text ="${store.address}"></td>
+		<td th:text ="${store.link}"></td>
+		
+    <td> <button type="submit" form="my_form" th:value="*{store.name}" name="name">Show Store</button>
+    </td>
+    </tr>
+</table>
+
+</body>
+</html>

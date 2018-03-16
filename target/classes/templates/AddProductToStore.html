@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Add Product to Store</title>
+
+<script>
+
+function validate(){
+	var Name=document.form1.name.value;
+	var Price=document.form1.price.value;
+	var StName=document.form1.storename.value;
+	if( Name==""){
+		alert("Enter product name please!");
+		return false;
+	}
+	if(Price==""){
+		alert("Enter product price within its range please!");
+		return false;
+	}
+	var pat=/[0-9]/;
+	if(!pat.test(Price)){
+		alert("The price must be a number");
+		return false;
+	}
+	if( StName==""){
+		alert("Enter store name please!");
+		return false;
+	}
+	return true;
+}
+</script>
+
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<td>Name</td>
+			<td>Category</td>
+			<td>Type</td>
+			<td>Upper Range Price</td>
+			<td>Lower Range Price</td>
+		</tr>
+		<tr th:each="product :${products}">
+			<td th:text="${product.name}">name </td>
+			<td th:text="${product.category}">category </td>
+			<td th:text="${product.type}">type </td>
+			<td th:text="${product.priceUpperRange}">priceUpperRange </td>
+			<td th:text="${product.priceLowerRange}">priceLowerRange </td>
+		</tr>
+		
+	</table>
+	<form action="StoreOwner" method="post" th:action="@{/AddProductToStore}" name="form1" onSubmit="return validate()">
+		<p>Name</p><input type="text" name="name"/>
+		<p>Price</p><input type="number" name="price"/>
+		<p>Store Name</p><input type="text" name="storename"/>
+		<p>Quantity</p><input type="number" name="quantity"/>
+		<br></br>
+		<input type="submit" value="submit" />
+		<br></br>
+	</form>
+</body>
+</html>

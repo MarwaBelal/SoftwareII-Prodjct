@@ -9,20 +9,44 @@ import javax.persistence.Id;
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	private String username;
-	private String email;
-	private String password;
+	protected Integer id;
+	protected String username;
+	protected String email;
+	protected String password;
+	protected String type;
+	protected double money;
 	public User(){
 		username="";
 		email="";
 		password="";
+		type="";
+		money=0;
 	}
-	public User(String username, String email, String password) {
+	
+	public String getType() {
+		return type;
+	}
+	
+	public double getMoney() {
+		return money;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public void setMoney(double money) {
+		this.money = money;
+	}
+
+	public User(String username, String email, String password, String type) {
+		super();
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.type = type;
 	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -3,9 +3,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Add store to the platform</title>
+<script>
+
+function validate(){
+	var Name=document.form1.name.value;
+	var type=document.form1.type.value;
+	var link=document.form1.link.value;
+	if( Name==""){
+		alert("Enter store name please!");
+		return false;
+	}
+	if(type==""){
+		alert("Enter store price type please!");
+		return false;
+	}
+	
+	if( link==""){
+		alert("Enter store link please!");
+		return false;
+	}
+	return true;
+}
+</script>
 </head>
 <body>
-	<form method="post" th:action="@{/AddStore}" th:object="${store}">
+	<form action="StoreOwner" method="post" th:action="@{/AddStore}" th:object="${suggestedstore}" name="form1" onSubmit="return validate()">
 		<p>Name</p><input type="text" th:field="*{name}" />
 		<br></br>
 		<p>Type</p><input type="text" th:field="*{type}"/>

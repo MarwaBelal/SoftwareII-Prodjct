@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Buy Product</title>
+
+<script>
+
+function buy(){
+	var amount=document.form1.amount.value;
+	var address=document.form1.address.value;
+
+	if( amount > currsp.getQuantity() ){
+			alert("The amount you're asking is not available");
+			return false;
+		}
+		if(address== "" ){
+			alert("please enter a valid shipping address!");
+			return false;
+		}
+		var x=currentUser.getMoney();
+		var y=amount*currsp.getPrice();
+		if(y>x ){
+			alert("please enter a valid shipping address!");
+			return false;
+		}
+			
+		return true;
+}
+</script>
+
+</head>
+<body>
+
+<form method="post" th:action="@{/BuyProduct}" name="form1" onSubmit="return buy()">
+		<p>Amount of Product</p><input  type="number" name="amount"/>
+		<br></br>
+		<p>Enter your shipping address</p><input type="text" name="address"/>
+		<br></br>
+		<input type="submit" value="submit" />
+		<br></br>
+		
+	</form>
+	
+
+
+</body>
+</html>

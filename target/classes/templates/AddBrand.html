@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Add new Brand</title>
+<script>
+
+function validate(){
+	var Name=document.form1.name.value;
+	var cat=document.form1.category.value;
+	if( Name==""){
+		alert("Enter brand name please!");
+		return false;
+	}
+	if( cat==""){
+		alert("Enter brand category please!");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<form action="Admin" method="post" th:action ="@{/AddBrand}" th:object="${brand}" name="form1" onSubmit="return validate()">
+		<p>Name</p><input type="text" th:field="*{name}"/><br></br>
+		<p>Category</p><input type="text" th:field="*{category}"/><br></br>
+		<input type="submit" value="submit"/>
+	</form>
+</body>
+</html>

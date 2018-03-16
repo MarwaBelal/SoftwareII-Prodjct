@@ -1,0 +1,42 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Buy Voucher</title>
+
+<script>
+
+function validate(){
+	var money=document.form1.money.value;
+	var card=document.form1.card.value;
+	if( money > 5000 ){
+		alert("Maximum value is 5000");
+		return false;
+	}
+	if(card.length != 8){
+		alert("please enter a valid credit card number!");
+		return false;
+	}
+	return true;
+}
+</script>
+
+</head>
+<body>
+
+<form method="post" th:action="@{/BuyVoucher}" name="form1" onSubmit="return validate()">
+		<p>Amount of money</p><input type="number" name="money"/>
+		<br></br>
+		<p>Credit card number</p><input type="text" name="card"/>
+		<br></br>
+		<input type="submit" value="submit" />
+		<br></br>
+		
+	</form>
+	
+
+
+</body>
+</html>
