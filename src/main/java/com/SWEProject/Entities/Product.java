@@ -11,20 +11,29 @@ public class Product {
 	private String type;
 	private double priceUpperRange;
 	private double priceLowerRange;
+	public int getNumOfBuy() {
+		return numOfBuy;
+	}
+	public void setNumOfBuy(int numOfBuy) {
+		this.numOfBuy = numOfBuy;
+	}
+	private int numOfBuy;
 	public Product() {
 		name="";
 		category="";
 		type="";
 		priceUpperRange=0.0;
 		priceLowerRange=0.0;
+		numOfBuy=0;
 	}
 	public Product(String name, String category, String type, double priceUpperRange,
-			double priceLowerRange) {
+			double priceLowerRange,int n) {
 		this.name = name;
 		this.category = category;
 		this.type = type;
 		this.priceUpperRange = priceUpperRange;
 		this.priceLowerRange = priceLowerRange;
+		this.numOfBuy = n;
 	}
 	
 	public String getName() {

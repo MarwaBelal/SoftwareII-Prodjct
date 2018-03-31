@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Add product App</title>
+</head>
+<body>
+
+
+
+<!-- <form   method="post" th:action ="@{/calcStat}"   id = "my_form2" ></form> -->
+<table>
+	<tr>
+	    <td>Operation </td>
+	    <td>on</td>
+	    <td>of</td>
+	    <td>ID</td>
+	</tr>
+	<tr th:each="statistic: ${stat}">
+	    <td th:text ="${statistic.getOperation()}"></td>
+
+	    <td th:text ="${statistic.getColumn()}"></td>
+
+	    <td th:text ="${statistic.getTable()}"></td>
+	    
+		
+		
+		<td th:text ="${statistic.getId()}"></td>
+    <!--  <td> <button type="submit" form="my_form2" th:value="*{statistic.getId()}" name="id" >View Statistics</button>
+    </td>-->
+	</tr>
+</table>
+
+<form   method="post" th:action ="@{/calcStat}" name = "my_form1" >
+
+<p>Store Name</p><input type="text" name="storename"/>
+<br></br>
+<p>Statistic id</p><input type="number" name="id"/>
+<br></br>
+<input type="submit" value="submit" />
+		<br></br>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Add product App</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/AddStat}" th:object="${statistics}" name="form1" >
+
+
+		<p>Table</p><input type="text" th:field="*{table}" />
+		<br></br>
+		<p>Column</p><input type="text" th:field="*{column}"/>
+		<br></br>
+		<p>Operation</p><input type="text" th:field="*{operation}" />
+		<br></br>
+		<input type="submit" value="submit" />
+		<br></br>
+	</form>
+</body>
+</html>

@@ -1,33 +1,28 @@
 package com.SWEProject.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.SWEProject.Entities.Administrator;
 import com.SWEProject.Entities.NormalUser;
-import com.SWEProject.Entities.Product;
-import com.SWEProject.Entities.Store;
+import com.SWEProject.Entities.Statistics;
 import com.SWEProject.Entities.StoreOwner;
 import com.SWEProject.Entities.StoresProducts;
+import com.SWEProject.Entities.Administrator;
 import com.SWEProject.Entities.User;
-import com.SWEProject.Repositories.StoreRepository;
+import com.SWEProject.Repositories.ProductRepository;
+import com.SWEProject.Repositories.StatRepository;
 import com.SWEProject.Repositories.StoresProductsRepository;
 import com.SWEProject.Repositories.UserRepository;
 
 @Controller
-@SessionAttributes("email")
+
 public class UserController {
 	public static  User currentUser;
 	public static StoresProducts currsp;
@@ -47,7 +42,8 @@ public class UserController {
 	@Autowired
 	private UserRepository repo;
 	@Autowired
-	private StoreRepository repostore;
+	StoresProductsRepository Srepo;
+	
 	@GetMapping("/Register")
 	public String registerGet(Model model) {
 		model.addAttribute("user", new User());
@@ -58,7 +54,6 @@ public class UserController {
 	public String registerPost(Model model,@ModelAttribute User user) {
 		List<Object> x=repo.existUser(user.getEmail());
 		if(x.size()==0) {
-			System.out.println(user.getType());
 			currentUser=InitializeUser(user.getType());
 			currentUser.setUsername(user.getUsername());
 			currentUser.setEmail(user.getEmail());
@@ -85,13 +80,12 @@ public class UserController {
 	public String getLogin() {
 		return "Login";
 	}
-	
+
 	@PostMapping("/Login")
-	public String show(@RequestParam ("email") String email, @RequestParam ("password") String pass ,ModelMap m) {
+	public String show(@RequestParam ("email") String email, @RequestParam ("password") String pass) {
 		List<Object[]> users=repo.findUser(email,pass);
-		if(users.size()!=0) {
-			for (int i=0 ; i<5 ; i++)
-				System.out.println(users.get(0)[i]);
+		if(users.size()!=0) 
+		{
 			currentUser=InitializeUser((String)users.get(0)[3]);
 			currentUser.setUsername((String)users.get(0)[0]);
 			currentUser.setEmail((String)users.get(0)[1]);
@@ -99,11 +93,18 @@ public class UserController {
 			currentUser.setType((String)users.get(0)[3]);
 			currentUser.setId((Integer)users.get(0)[4]);
 			currentUser.setMoney((Double)users.get(0)[5]);
+			if(currentUser.getType().equals("normaluser")) {
+				return "NormalUser";
+			}
+			else if(currentUser.getType().equals("storeowner")) {
+				return "StoreOwner";
+			}
+			else if(currentUser.getType().equals("administrator")) {
+				return "Admin";
+			}
+			currentUser.setNumoflogin(currentUser.getNumoflogin()+1);
+			repo.Updateloginnum(currentUser.getNumoflogin(), email);
 		}
-		if (currentUser.getType().equals("normaluser"))return "NormalUser";
-		if (currentUser.getType().equals("administrator")) return "Admin";
-		if (currentUser.getType().equals("storeowner")) return "StoreOwner";
-			
 		return "Login";
 	}
 	
@@ -113,68 +114,82 @@ public class UserController {
 		return "BuyVoucher";
 	}
 
-	@RequestMapping("/BuyVoucher")
-	public void BuyVoucher(@RequestParam ("money") double money,@RequestParam ("card") String card )
+	@PostMapping("/BuyVoucher")
+	public String BuyVoucher(@RequestParam ("money") double money,@RequestParam ("card") String card )
 	{
-				currentUser.setMoney(currentUser.getMoney()+money);
-				System.out.println(currentUser.getMoney());
-				repo.UpdateMoney(currentUser.getMoney(), currentUser.getEmail());
-				System.out.println("empty ?? "+currentUser.getEmail());
-				
-			
+		currentUser.setMoney(currentUser.getMoney()+money);
+		repo.UpdateMoney(currentUser.getMoney(), currentUser.getEmail());
+		if(currentUser.getType().equals("normaluser")) {
+			return "NormalUser";
 		}
-	@Autowired
-	StoresProductsRepository Srepo;
+		else if(currentUser.getType().equals("storeowner")) {
+			return "StoreOwner";
+		}
+		return "BuyVouvher";
+	}
+	
 	@GetMapping("/BuyProduct")
 	public String product() {
 		return "BuyProduct";
 	}
 	@PostMapping("/getStoreproduct")
-	public String takestore(@RequestParam ("id") int id)
+	public String takestore(@RequestParam ("id") Integer id)
 	{
-		
 		currsp=new StoresProducts();
-		System.out.println("id    "+id);
 		currsp=Srepo.findOne(id);
-		System.out.println(currsp.getQuantity());
-		System.out.println("ay haga");
-			return "BuyProduct";	
+		return "BuyProduct";	
 	}
+	
+	@Autowired
+	ProductRepository repoP;
 
 	@PostMapping("/BuyProduct")
-	public void BuyProduct(@RequestParam ("amount") int amount,@RequestParam ("address") String adress )
+	public String BuyProduct(@RequestParam ("amount") int amount,@RequestParam ("address") String adress )
 	{
-		   
 			double total=0;
 			int newQuantity=0;
 			total = amount * currsp.getPrice();
-			System.out.println(total);
-			System.out.println(amount);
-			System.out.println(currsp.getPrice());
-			currentUser.setMoney(currentUser.getMoney()-total);
-			repo.UpdateMoney(currentUser.getMoney(), currentUser.getEmail());
-			newQuantity = currsp.getQuantity() - amount ;
-			Srepo.UpdateQuantity(newQuantity, currsp.getStorename());
-			currsp.setNumofbuys(currsp.getNumofbuys()+1);
-			Srepo.UpdateNumofbuys(currsp.getNumofbuys(), currsp.getId());
+			String currProductName;
+			
+			if(currentUser.getMoney()>=total && amount<=currsp.getQuantity()) {
+				currentUser.setMoney(currentUser.getMoney()-total);
+				repo.UpdateMoney(currentUser.getMoney(), currentUser.getEmail());
+				newQuantity = currsp.getQuantity() - amount ;
+				Srepo.UpdateQuantity(newQuantity,currsp.getId());
+				currsp.setNumofbuys(currsp.getNumofbuys()+1);
+		        currProductName=currsp.getProductname();
+		        int x =repoP.TotalNUmOfBuys(currProductName);
+		        x+=1;
+		        repoP.updateNumOfBuys(x, currProductName);
+				Srepo.UpdateNumofbuys(currsp.getNumofbuys(), currsp.getId());
+				if(currentUser.getType().equals("normaluser")) {
+					return "NormalUser";
+				}
+				else if(currentUser.getType().equals("storeowner")) {
+					return "StoreOwner";
+				}
+			}
+			return "BuyProduct";
 	}
-	@PostMapping("/ShowStatistics")
-	public String viewStatistics(Model model ,@RequestParam ("name") String name)
-	{
 
-		Store s= repostore.findOne(name);
-		model.addAttribute("store", s.getNumofviews());
-		return "ShowNumofViews";
-	}
+	@Autowired
+	StatRepository repostat;
 	
-	@PostMapping("/ShowStatistics2")
-	public String viewStatistics2(Model model ,@RequestParam ("id") Integer id)
-	{
-		StoresProducts s= Srepo.findOne(id);
-		model.addAttribute("s", s.getNumofbuys());
-		return "ShowNumofBuys2";
+	@GetMapping("/AddStat")
+	public String getStat(Model model) {
+		model.addAttribute("statistics",new Statistics());
+		return "AddStat";
 	}
-	
+
+  @PostMapping("/AddStat")
+public String AddStatistics (Model model, @ModelAttribute Statistics s)
+{
+	System.out.println("ayjhaaaaa");
+	    repostat.save(s);
+		//model.addAttribute("statistics",new Statistics());
+	//repostat.addd(s.getTable(), s.getColumn());
+
+		System.out.println("ayjhaaaaa");
+		return "AddStat";
 }
-
-
+}

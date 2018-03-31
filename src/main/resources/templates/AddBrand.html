@@ -21,7 +21,7 @@ function validate(){
 </script>
 </head>
 <body>
-	<form action="Admin" method="post" th:action ="@{/AddBrand}" th:object="${brand}" name="form1" onSubmit="return validate()">
+	<form method="post" th:action ="@{/AddBrand}" th:object="${brand}" name="form1" onSubmit="return validate()">
 		<p>Name</p><input type="text" th:field="*{name}"/><br></br>
 		<p>Category</p><input type="text" th:field="*{category}"/><br></br>
 		<input type="submit" value="submit"/>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Store Statistics</title>
+</head>
+<body>
+	<p>Number of Views of Store: </p>
+	<p  th:text ="${store}"></p>
+	<br></br>
+	<p>Sold out Products </p>
+	
+	<table border="1">
+		<tr>
+			<td>Name</td>
+		</tr>
+		<tr th:each="product :${SOProducts}">
+			<td th:text="${product.name}">name </td>
+		</tr>
+	</table>
+	
+
+</body>
+</html>

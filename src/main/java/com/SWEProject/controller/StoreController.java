@@ -1,6 +1,7 @@
 package com.SWEProject.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +11,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.SWEProject.Entities.Product;
+import com.SWEProject.Entities.Statistics;
 import com.SWEProject.Entities.Store;
 import com.SWEProject.Entities.StoreOwner;
+import com.SWEProject.Entities.StoresProducts;
 import com.SWEProject.Entities.SuggestedStore;
+import com.SWEProject.Repositories.StatRepository;
 import com.SWEProject.Repositories.StoreRepository;
+import com.SWEProject.Repositories.StoresProductsRepository;
 import com.SWEProject.Repositories.SuggestedStoreRepository;
 
 @Controller
@@ -23,6 +29,10 @@ public class StoreController {
 	private StoreRepository repo;
 	@Autowired
 	private SuggestedStoreRepository repoSug;
+	@Autowired
+	private StoresProductsRepository Srepo;
+	@Autowired
+	private StatRepository Statrepo;
 	@GetMapping("/AddStore")
 	public String getAddStore(Model model) {
 		model.addAttribute("suggestedstore",new SuggestedStore());
@@ -31,7 +41,6 @@ public class StoreController {
 	@PostMapping("/AddStore")
 	public String addStore(Model model, @ModelAttribute SuggestedStore suggestedstore) {
 		storeOwner=(StoreOwner)UserController.currentUser;
-		System.out.println(storeOwner.getUsername());
 		if(!repoSug.exists(suggestedstore.getName()) && storeOwner.getType().equals("storeowner")) {
 			suggestedstore.setOwnerid(storeOwner.getId());
 			repoSug.save(suggestedstore);
@@ -54,7 +63,7 @@ public class StoreController {
 		return "AcceptStore";
 	}
 	@PostMapping("/AcceptStore")
-	public String postSuggested(Model model, @RequestParam(value="name") String name) {
+	public String postSuggested(Model model, @RequestParam ("name") String name) {
 		Iterable <SuggestedStore> storeIterable = repoSug.findAll();
 		ArrayList <SuggestedStore> storeList  = new ArrayList<SuggestedStore>();
 		for (SuggestedStore suggestedstore : storeIterable) {
@@ -83,6 +92,7 @@ public class StoreController {
 		model.addAttribute("stores", Storelist);
 		return "Show-Stores";
 	}
+	
 	@GetMapping("/Show-Stores1")
 	public String ShowStores1(Model model)
 	{
@@ -92,17 +102,58 @@ public class StoreController {
 		{
 			Storelist.add(store);
 		}
-		
-		UserController s= new UserController();
 		ArrayList<Store>storeowner= new ArrayList<Store>();
 		for( int i=0 ; i<Storelist.size() ; i++ )
 		{
-			if(s.currentUser.getId()==Storelist.get(i).getOwnerid())
+			if(UserController.currentUser.getId()==Storelist.get(i).getOwnerid())
 			{
 				storeowner.add(Storelist.get(i));
 			}
 		}
 		model.addAttribute("stores1", storeowner);
 		return "ShowStatistics";
+	}
+	
+	@Autowired
+	StatRepository statrepo;
+	
+	@PostMapping("/ShowStatistics")
+	public String viewStatistics(Model model/* ,@RequestParam ("name") String name*/)
+	{
+		/*Store s= repo.findOne(name);
+		model.addAttribute("store", s.getNumofviews());
+		List<Object> SOProduct=Srepo.soldoutProducts(name);
+		ArrayList<Product> SOProductList=new ArrayList<Product>();
+		Product tmp=new Product();
+		for(int i=0;i<SOProduct.size();i++) {
+			tmp.setName((String)SOProduct.get(i));
+			SOProductList.add(tmp);
+		}
+		model.addAttribute("SOProducts", SOProductList);
+		return "ViewsSoldout";*/
+		Iterable <Statistics> statisticsIterable = statrepo.findAll();
+		ArrayList <Statistics> statisticslist1 = new ArrayList<Statistics>();
+		for (Statistics stat : statisticsIterable) {
+			statisticslist1.add(stat);
+		}
+		ArrayList <Statistics> statisticslist = new ArrayList<Statistics>();
+		for (int i=0 ; i< statisticslist1.size() ; i++)
+		{
+			if (statisticslist1.get(i).isView())
+			{
+				statisticslist.add(statisticslist1.get(i));
+			}
+		}
+		model.addAttribute("stat", statisticslist);
+		return "showProductStat";
+		
+	}
+	
+	@PostMapping("/ShowStatistics2")
+	public String viewStatistics2(Model model ,@RequestParam ("id") Integer id)
+	{
+		double s= Statrepo.findVal(id);
+		model.addAttribute("s", s);
+		return "ShowNumofBuys";
 	}
 }

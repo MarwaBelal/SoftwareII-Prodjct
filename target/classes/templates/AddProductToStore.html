@@ -10,6 +10,7 @@ function validate(){
 	var Name=document.form1.name.value;
 	var Price=document.form1.price.value;
 	var StName=document.form1.storename.value;
+	var quantity=document.form1.quantity.value;
 	if( Name==""){
 		alert("Enter product name please!");
 		return false;
@@ -25,6 +26,10 @@ function validate(){
 	}
 	if( StName==""){
 		alert("Enter store name please!");
+		return false;
+	}
+	if( quantity==""){
+		alert("Enter product quantity please!");
 		return false;
 	}
 	return true;
@@ -50,11 +55,17 @@ function validate(){
 		</tr>
 		
 	</table>
-	<form action="StoreOwner" method="post" th:action="@{/AddProductToStore}" name="form1" onSubmit="return validate()">
+	<form method="post" th:action="@{/AddProductToStore}" name="form1" onSubmit="return validate()">
 		<p>Name</p><input type="text" name="name"/>
 		<p>Price</p><input type="number" name="price"/>
 		<p>Store Name</p><input type="text" name="storename"/>
 		<p>Quantity</p><input type="number" name="quantity"/>
+		<br></br>
+		<p>Select brand name</p>
+		<select name="brandname" >
+			<option value="">-</option>
+  			<option th:each="brand :${brands}" th:text="${brand.name}" th:value="${brand.name}"></option>
+		</select>
 		<br></br>
 		<input type="submit" value="submit" />
 		<br></br>

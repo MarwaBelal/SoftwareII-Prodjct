@@ -7,16 +7,22 @@
 <body>
 	<a href="AddProductToStore">ADD PRODUCT TO STORE</a><br></br>
 	<a href="AddStore">ADD STORE</a><br></br>
-	<a href="">BUY</a><br></br>
+	<a href="BuyVoucher">BUY VOUCHER</a><br></br>
 	<a href="Welcome">LOG OUT</a><br></br>
-
 	
 	
 	
 	
-	<form  action= "ShowStatistics" method="get" id = "my_form" th:action ="@{/Show-Stores1}" ></form>
+	<form  action= "ShowStatistics" method="get" id = "my_form" th:action ="@{/Show-Stores}" ></form>
 	
-    <button type="submit" form="my_form" >Show Statistics</button>
-	
+    <button type="submit" form="my_form" >Show Stores</button>
+    
+    <form  action= "ShowStatistics2" method="post" id = "my_form1" th:action ="@{/ShowStatistics}" ></form>
+    
+    <button type="submit" form="my_form1" >Show Statistics</button>
+    
+    <form  action= "Show-StatOwner" method="post" id = "my_form2" th:action ="@{/Show-Stat}" ></form>
+    
+    <button type="submit" form="my_form2" >Choose Statistics</button>
 </body>
 </html>

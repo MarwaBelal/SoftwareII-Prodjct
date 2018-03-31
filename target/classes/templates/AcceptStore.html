@@ -7,7 +7,6 @@
 
 function validate(){
 	var Name=document.form1.name.value;
-	var Price=document.form1.price.value;
 	if( Name==""){
 		alert("Enter store name please!");
 		return false;
@@ -28,12 +27,11 @@ function validate(){
 		</tr>
 		
 	</table>
-	<form action="Admin" method="post" th:action="@{/AcceptStore}" name="form1" onSubmit="return validate()">
+	<form  method="post" th:action="@{/AcceptStore}" name="form1" onSubmit="return validate()">
 		<p>Name</p><input type="text" name="name"/>
 		<br></br>
 		<input type="submit" value="submit" />
 		<br></br>
-		
 	</form>
 </body>
 </html>

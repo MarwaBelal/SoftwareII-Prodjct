@@ -14,6 +14,4 @@ public interface StoreRepository extends CrudRepository<Store,String>{
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Store u SET u.numofviews = :value WHERE u.name = :name ")
 	public void UpdateNumofviews(@Param("value") Integer value, @Param("name") String name);
-
-	
 }

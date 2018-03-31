@@ -13,19 +13,12 @@ public class Store {
 	private Integer ownerid;
 	private Integer numofviews;
 	
-	public Integer getNumofviews() {
-		return numofviews;
-	}
-
-	public void setNumofviews(Integer numofviews) {
-		this.numofviews = numofviews;
-	}
-
 	public Store() {
 		name = "";
 		type = "";
 		address = "";
 		link = "";
+		numofviews=0;
 	}
 	
 	public Store(String name, String type, String link, Integer ownerid) {
@@ -33,6 +26,7 @@ public class Store {
 		this.type = type;
 		this.link = link;
 		this.ownerid = ownerid;
+		numofviews=0;
 	}
 
 	public Store(String name, String type, String address, String link, Integer ownerid) {
@@ -41,6 +35,7 @@ public class Store {
 		this.address = address;
 		this.link = link;
 		this.ownerid = ownerid;
+		numofviews=0;
 	}
 
 	public String getName() {
@@ -75,4 +70,13 @@ public class Store {
 	public void setOwnerid(Integer ownerid) {
 		this.ownerid = ownerid;
 	}
+
+	public Integer getNumofviews() {
+		return numofviews;
+	}
+
+	public void setNumofviews(Integer numofviews) {
+		this.numofviews = numofviews;
+	}
+	
 }

@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.SWEProject.Entities.Brand;
 import com.SWEProject.Entities.Product;
+import com.SWEProject.Entities.ProductTemplate;
 import com.SWEProject.Entities.Store;
 import com.SWEProject.Entities.StoresProducts;
+import com.SWEProject.Repositories.BrandRepository;
 import com.SWEProject.Repositories.ProductRepository;
 import com.SWEProject.Repositories.StoreRepository;
 import com.SWEProject.Repositories.StoresProductsRepository;
@@ -27,6 +30,8 @@ public class ProductController {
 	private StoreRepository repoStore;
 	@Autowired
 	private StoresProductsRepository repoStorep;
+	@Autowired
+	private BrandRepository repobrand;
 	
 	@GetMapping("/AddProduct")
 	public String addproductG(Model model)
@@ -54,10 +59,20 @@ public class ProductController {
 			productList.add(product);
 		}
 		model.addAttribute("products", productList);
+		Iterable <Brand> brandIterable = repobrand.findAll();
+		ArrayList <Brand> brandList  = new ArrayList<Brand>();
+		for (Brand brand : brandIterable) {
+			brandList.add(brand);
+		}
+		model.addAttribute("brands", brandList);
 		return "AddProductToStore";
 	}
 	@PostMapping("/AddProductToStore")
-	public String postAddProductToStore(Model model, @RequestParam ("name") String name, @RequestParam ("quantity") int quantity, @RequestParam ("price") double price , @RequestParam ("storename") String storename) {
+	public String postAddProductToStore(Model model, @RequestParam ("name") String name, 
+			@RequestParam ("quantity") int quantity, @RequestParam ("price") double price , 
+			@RequestParam ("storename") String storename, 
+			@RequestParam ("brandname") String brandname) {
+		
 		Iterable <Product> productIterable = repo.findAll();
 		ArrayList <Product> productList  = new ArrayList<Product>();
 		for (Product product : productIterable) {
@@ -65,17 +80,26 @@ public class ProductController {
 		}
 		model.addAttribute("products", productList);
 		
+		Iterable <Brand> brandIterable = repobrand.findAll();
+		ArrayList <Brand> brandList  = new ArrayList<Brand>();
+		for (Brand brand : brandIterable) {
+			brandList.add(brand);
+		}
+		model.addAttribute("brands", brandList);
+		
 		Product tmp=new Product();
 		tmp=repo.findOne(name);
 		StoresProducts sproduct=new StoresProducts();
 		sproduct.setProductname(tmp.getName());
 		sproduct.setStorename(storename);
 		sproduct.setPrice(price, tmp.getPriceUpperRange(), tmp.getPriceLowerRange());
-		sproduct.setquantity(quantity);
-		boolean exists=repoStore.exists(storename);
+		sproduct.setQuantity(quantity);
+		sproduct.setBrandname(brandname);
+		boolean store_exists=repoStore.exists(storename);
+		boolean brand_exists=repobrand.exists(brandname);
 		List<Object[]> x=repoStorep.find(storename,name);
 		if(x.size()==0) {
-			if(exists==true) {
+			if(store_exists==true && brand_exists==true) {
 				repoStorep.save(sproduct);
 				return "StoreOwner";
 			}
@@ -96,95 +120,41 @@ public class ProductController {
 		{
 			storeproductlist.add(storeproduct);
 		}
-
-		System.out.println(storeproductlist.size());
-		model.addAttribute("storeproducts", storeproductlist);
 		Iterable <Product> productIterable=repo.findAll();
 		ArrayList <Product> productlist = new ArrayList<Product>();
 		for( Product product : productIterable )
 		{
 			productlist.add(product);
 		}
-
-		System.out.println(productlist.size());
-		model.addAttribute("products", productlist);
-		ArrayList <StoresProducts> storeproductlist1 = new ArrayList<StoresProducts>();
+		
+		ArrayList <ProductTemplate> productsofStore = new ArrayList<ProductTemplate>();
 		for(int i=0 ; i<storeproductlist.size() ; i++)
 		{
-			if(storeproductlist.get(i).getStorename().equals(name))
-				storeproductlist1 .add(	storeproductlist.get(i));	
-		}
-		model.addAttribute("products2", storeproductlist1);
-		ArrayList <Product> productlist1 = new ArrayList<Product>();
-		for(int i=0 ; i<storeproductlist1.size() ; i++)
-		{
-			for(int j=0 ; j<productlist.size(); i++)
+			for(int j=0 ; j<productlist.size(); j++)
 			{
-				if(storeproductlist1.get(i).getProductname().equals(productlist.get(j).getName()))
+				if(storeproductlist.get(i).getProductname().equals(productlist.get(j).getName()) && storeproductlist.get(i).getStorename().equals(name))
 				{
-					productlist1.add(productlist.get(j));
+					ProductTemplate tmp=new ProductTemplate();
+					tmp.id=storeproductlist.get(i).getId();
+					tmp.name=productlist.get(j).getName();
+					tmp.category=productlist.get(j).getCategory();
+					tmp.type=productlist.get(j).getType();
+					tmp.price=storeproductlist.get(i).getPrice();
+					if(productsofStore.contains(tmp)==false) {
+						productsofStore.add(tmp);
+					}
 					break;
 				}
 			}
 		}
-		System.out.println(productlist1.size());
-
-		System.out.println(storeproductlist1.size());
-		model.addAttribute("products1", productlist1);
+		for(int i=0;i<productsofStore.size();i++) {
+			System.out.println(productsofStore.get(i).name+"   "+productsofStore.get(i).price);
+		}
+		model.addAttribute("products1", productsofStore);
+		
+		if(UserController.currentUser.getType().equals("storeowner")) {
+			return "ShowProductsOwner";
+		}
 		return "ShowProducts";
 	}
-	
-	
-	@GetMapping("/ShowProducts1")
-	public String ShowProducts1(Model model , @RequestParam ("name") String name)
-	{
-		
-		Store store= repoStore.findOne(name);
-		store.setNumofviews(store.getNumofviews()+1);
-		repoStore.UpdateNumofviews(store.getNumofviews(),name);
-		Iterable <StoresProducts> storeproductIterable=repoStorep.findAll();
-		ArrayList <StoresProducts> storeproductlist = new ArrayList<StoresProducts>();
-		for( StoresProducts storeproduct : storeproductIterable )
-		{
-			storeproductlist.add(storeproduct);
-		}
-
-		System.out.println(storeproductlist.size());
-		model.addAttribute("storeproducts", storeproductlist);
-		Iterable <Product> productIterable=repo.findAll();
-		ArrayList <Product> productlist = new ArrayList<Product>();
-		for( Product product : productIterable )
-		{
-			productlist.add(product);
-		}
-
-		System.out.println(productlist.size());
-		model.addAttribute("products", productlist);
-		ArrayList <StoresProducts> storeproductlist1 = new ArrayList<StoresProducts>();
-		for(int i=0 ; i<storeproductlist.size() ; i++)
-		{
-			if(storeproductlist.get(i).getStorename().equals(name))
-				storeproductlist1 .add(	storeproductlist.get(i));	
-		}
-		model.addAttribute("products2", storeproductlist1);
-		ArrayList <Product> productlist1 = new ArrayList<Product>();
-		for(int i=0 ; i<storeproductlist1.size() ; i++)
-		{
-			for(int j=0 ; j<productlist.size(); i++)
-			{
-				if(storeproductlist1.get(i).getProductname().equals(productlist.get(j).getName()))
-				{
-					productlist1.add(productlist.get(j));
-					break;
-				}
-			}
-		}
-		System.out.println(productlist1.size());
-
-		System.out.println(storeproductlist1.size());
-		model.addAttribute("products1", productlist1);
-		return "ShowProductsOwner";
-	}
-
-
 }

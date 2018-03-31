@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Show Statistics for owner</title>
+</head>
+<body>
+<form  action= "Show-StatOwner" method="post" id = "my_form" th:action ="@{/Add-Stat}" ></form>
+<form  action= "Show-StatOwner" method="post" id = "my_form1" th:action ="@{/RemoveStat}" ></form>
+
+<table border="1">
+	<tr>
+	    <td>table</td>
+	    <td>column</td>
+	    <td>Operation</td>
+	</tr>
+	<tr th:each="stat : ${Statsadd}" >
+		<td th:text ="${stat.getTable()}"></td>
+	        <td th:text ="${stat.getColumn()}"></td>
+		<td th:text ="${stat.getOperation()}"></td>
+		<td> <button type="submit" form="my_form" th:value="*{stat.getId()}" name="id">Add to palet</button>
+    </td>
+    </tr>
+</table>
+
+<br></br>
+<table border="1">
+	<tr>
+	    <td>table</td>
+	    <td>column</td>
+	    <td>Operation</td>
+	</tr>
+	<tr th:each="stat : ${Statsremove}" >
+		<td th:text ="${stat.getTable()}"></td>
+	        <td th:text ="${stat.getColumn()}"></td>
+		<td th:text ="${stat.getOperation()}"></td>
+		<td> <button type="submit" form="my_form1" th:value="*{stat.getId()}" name="id">Remove from palet</button>
+    </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

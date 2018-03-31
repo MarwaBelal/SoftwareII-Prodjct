@@ -15,35 +15,36 @@ public class User {
 	protected String password;
 	protected String type;
 	protected double money;
+	protected int numoflogin;
+	public int getNumoflogin() {
+		return numoflogin;
+	}
+	public void setNumoflogin(int numoflogin) {
+		this.numoflogin = numoflogin;
+	}
 	public User(){
 		username="";
 		email="";
 		password="";
 		type="";
 		money=0;
+		numoflogin=1;
+	}
+	public User(String username, String email, String password, String type, double money) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.type = type;
+		this.money=money;
+		numoflogin=1;
 	}
 	
 	public String getType() {
 		return type;
 	}
-	
-	public double getMoney() {
-		return money;
-	}
 
 	public void setType(String type) {
-		this.type = type;
-	}
-	
-	public void setMoney(double money) {
-		this.money = money;
-	}
-
-	public User(String username, String email, String password, String type) {
-		super();
-		this.username = username;
-		this.email = email;
-		this.password = password;
 		this.type = type;
 	}
 
@@ -71,5 +72,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	public double getMoney() {
+		return money;
+	}
+	public void setMoney(double money) {
+		this.money = money;
+	}
+	
 }

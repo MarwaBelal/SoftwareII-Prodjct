@@ -23,10 +23,10 @@ public class BrandController {
 	@PostMapping("/AddBrand")
 	public String addBrandP(Model model ,@ModelAttribute  Brand brand)
 	{
-		
-		if(!repo.exists(brand.getName())) {
+		boolean ifExist=repo.exists(brand.getName());
+		if(ifExist==false) {
 			repo.save(brand);
-			model.addAttribute("brand", new Brand());
+			//model.addAttribute("brand", new Brand());
 			return "Admin";
 		}
 		model.addAttribute("brand", new Brand());

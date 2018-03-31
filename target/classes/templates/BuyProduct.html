@@ -6,33 +6,26 @@
 
 <script>
 
-function buy(){
+function validate(){
 	var amount=document.form1.amount.value;
 	var address=document.form1.address.value;
 
-	if( amount > currsp.getQuantity() ){
-			alert("The amount you're asking is not available");
+	if( amount=="" ){
+			alert("Enter the amount please!");
 			return false;
-		}
-		if(address== "" ){
-			alert("please enter a valid shipping address!");
-			return false;
-		}
-		var x=currentUser.getMoney();
-		var y=amount*currsp.getPrice();
-		if(y>x ){
-			alert("please enter a valid shipping address!");
-			return false;
-		}
-			
-		return true;
+	}
+	if(address== "" ){
+		alert("please enter a valid shipping address!");
+		return false;
+	}		
+	return true;
 }
 </script>
 
 </head>
 <body>
 
-<form method="post" th:action="@{/BuyProduct}" name="form1" onSubmit="return buy()">
+<form method="post" th:action="@{/BuyProduct}" name="form1" onSubmit="return validate()">
 		<p>Amount of Product</p><input  type="number" name="amount"/>
 		<br></br>
 		<p>Enter your shipping address</p><input type="text" name="address"/>

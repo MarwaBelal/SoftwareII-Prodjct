@@ -9,50 +9,33 @@ import javax.persistence.Id;
 public class StoresProducts {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	private String productname;
-	private int quantity; 
-	private double price;
+	protected Integer id;
 	private String storename;
+	private String productname;
+	private double price;
+	private int quantity;
 	private Integer numofbuys;
-	public Integer getNumofbuys() {
-		return numofbuys;
-	}
-
-	public void setNumofbuys(Integer numofbuys) {
-		this.numofbuys = numofbuys;
-	}
-
+	private String brandname; 
 	public StoresProducts() {
 		storename = "";
 		productname = "";
-		price=0.0;
+		price=0;
+		numofbuys=0;
 		quantity=0;
 	}
-	
 	public StoresProducts(String storename, String productname, double price, int quantity) {
 		this.storename = storename;
 		this.productname = productname;
 		this.price = price;
-		this.quantity = quantity;
+		this.quantity=quantity;
+		numofbuys=0;
 	}
-
 	public Integer getId() {
 		return id;
 	}
-	
-	public Integer getQuantity() {
-		return quantity;
-	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public void setquantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
 	public String getStorename() {
 		return storename;
 	}
@@ -65,11 +48,9 @@ public class StoresProducts {
 	public void setProductname(String productname) {
 		this.productname = productname;
 	}
-
 	public double getPrice() {
 		return price;
 	}
-
 	public void setPrice(double price, double upper, double lower) {
 		if(price>upper) {
 			this.price = upper;
@@ -81,5 +62,22 @@ public class StoresProducts {
 			this.price = price;
 		}
 	}
-	
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public Integer getNumofbuys() {
+		return numofbuys;
+	}
+	public void setNumofbuys(Integer numofbuys) {
+		this.numofbuys = numofbuys;
+	}
+	public String getBrandname() {
+		return brandname;
+	}
+	public void setBrandname(String brandname) {
+		this.brandname = brandname;
+	}
 }

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,12 +9,29 @@
 function validate(){
 	var money=document.form1.money.value;
 	var card=document.form1.card.value;
+	var pat=/[0-9]/;
+	if( money=="" ){
+		alert("Enter a value please!");
+		return false;
+	}
 	if( money > 5000 ){
-		alert("Maximum value is 5000");
+		alert("Maximum value is 5000!");
+		return false;
+	}
+	if(!pat.test(money)){
+		alert("The amount of money must be a number!");
+		return false;
+	}
+	if( card=="" ){
+		alert("Enter card number please!");
 		return false;
 	}
 	if(card.length != 8){
 		alert("please enter a valid credit card number!");
+		return false;
+	}
+	if(!pat.test(card)){
+		alert("The card number must be a number!");
 		return false;
 	}
 	return true;

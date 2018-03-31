@@ -10,21 +10,19 @@
 
 <table border="1">
 	<tr>
-	    <td>name</td>
-	    <td>type</td>
-	    <td>category</td>
-	    <td>quantity</td>
+	    <td>Name</td>
+	    <td>Type</td>
+	    <td>Category</td>
+	    <td>Price</td>
 	</tr>
-	<tr th:each="product : ${products1}"  >
-	<tr th:each="storeproduct : ${products2}">
-	        <td th:text ="${product.name}"></td>
-		<td th:text ="${product.type}"></td>
-		<td th:text ="${product.category}"></td>
-		<td th:text ="${storeproduct.quantity}"></td>
-    <td> <button type="submit" form="my_form" th:value="*{storeproduct.id}" name="id">Buy Product</button>
+	<tr th:each="producttemplate: ${products1}">
+	    <td th:text ="${producttemplate.name}"></td>
+		<td th:text ="${producttemplate.type}"></td>
+		<td th:text ="${producttemplate.category}"></td>
+		<td th:text ="${producttemplate.price}"></td>
+    <td> <button type="submit" form="my_form" th:value="*{producttemplate.id}" name="id">Buy Product</button>
     </td>
-    
-	</tr></tr>
+	</tr>
 </table>
 </body>
 </html>
