@@ -1,7 +1,9 @@
 # SoftwareII-Project" Online Market"
 Requirements backlog
 1-	User should be able to register in the online market. Each user should be identified by username or email. Each user should provide a password which will be used later to login
+
 2-	User should be able to login into the online market by providing username/email and password. 
+
 3-	User should be able to add a new store to the online market. The online store information should include the store location (onsite or online), store name, store type (sports, entertainment, clothes, technology, …, etc) and any other relative information. The store will not be added until the online store administrator accepts it.
 4-	The administrator should be able to add new products to the system. The products info should include product name, price range, category, …,etc. Once the product is added it should be available to the store owner to add it.
 5-	The store owner (The user who had a store) should be able to add new products to a store (if he had one). The product should be existed in the system (added firstly by the system administrator). The store owner should determine the available quantity he had. The store owner should put a price to the product within the price range of this product (specified previously by the store administrator)
