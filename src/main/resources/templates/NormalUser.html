@@ -5,9 +5,14 @@
 <title>USER ACCOUNT</title>
 </head>
 <body>
-	<a href="BuyVoucher">BUY VOUCHER</a><br></br>
-	<a href="Show-Stores">EXPLORE STORES</a><br></br>
-	<a href="Welcome">LOG OUT</a><br></br>
+	<form  method="get" id = "my_form1" th:action ="@{/BuyVoucher}" ></form>
+    <button type="submit" form="my_form1" >Buy Voucher</button>
+	<br></br>
+    <form  method="get" id = "my_form2" th:action ="@{/Show-Stores}" ></form>
+    <button type="submit" form="my_form2" >Explore Stores</button>
+    <br></br>
+	 <form  method="get" id = "my_form3" th:action ="@{/Welcome}" ></form>
+    <button type="submit" form="my_form3" >Log Out</button>
 	
 </body>
 </html>

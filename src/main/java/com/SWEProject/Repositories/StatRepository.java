@@ -12,15 +12,9 @@ import com.SWEProject.Entities.Statistics;
 
 public interface StatRepository extends CrudRepository<Statistics,Integer>
 {
-	
-	
+	/*	
 	@Query("SELECT tab, col, operation FROM Statistics WHERE id = :id ")
 	public List<Object[]>  find(@Param("id") int id);
-	
-	//storesproducts
-	
-	
-	
 	
 	@Transactional 
 	@Modifying(clearAutomatically = true)
@@ -36,6 +30,16 @@ public interface StatRepository extends CrudRepository<Statistics,Integer>
 	public double  findVal(@Param("id") int id);
 	
 	
+	@Query("SELECT s FROM  Product ")
+	public List<Object[]>  findColumnProduct(@Param("s") String s);
+	
+	@Query("SELECT numofviews FROM  Store ")
+	public List<Integer> findColumnStore();
+
+	@Query("SELECT numoflogin FROM  User ")
+	public List<Integer> findColumnUser();*/
+	
+	
 	/*@Query("SELECT tab, col, operation FROM Statistics WHERE view= 1")
 	public List<Object[]>  findture();*/
 	
@@ -48,18 +52,12 @@ public interface StatRepository extends CrudRepository<Statistics,Integer>
 	@Transactional
 	public int addd(@Param ("value") String value, @Param ("value2") String value2);
 	*/
-	/*
 	
 	
 	
 	
-	@Query("SELECT s FROM  Product ")
-	public List<Object[]>  findColumnProduct(@Param("s") String s);
 	
-	@Query("SELECT numofviews FROM  Store ")
-	public List<Integer> findColumnStore();
-
-	@Query("SELECT numoflogin FROM  User ")
-	public List<Integer> findColumnUser();*/
+	
+	
 
 }

@@ -2,10 +2,12 @@ package com.SWEProject.Entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Brand {
 	@Id
+	@NotNull
 	private String name;
 	private String category;
 	public Brand() {

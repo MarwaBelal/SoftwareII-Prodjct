@@ -5,24 +5,29 @@
 <title>STORE OWNER ACCOUNT</title>
 </head>
 <body>
-	<a href="AddProductToStore">ADD PRODUCT TO STORE</a><br></br>
-	<a href="AddStore">ADD STORE</a><br></br>
-	<a href="BuyVoucher">BUY VOUCHER</a><br></br>
-	<a href="Welcome">LOG OUT</a><br></br>
 	
-	
-	
-	
-	<form  action= "ShowStatistics" method="get" id = "my_form" th:action ="@{/Show-Stores}" ></form>
-	
-    <button type="submit" form="my_form" >Show Stores</button>
+	<form  method="get" id = "my_form" th:action ="@{/AddStore}" ></form>
+    <button type="submit" form="my_form" >Add Store</button>
+    <br></br>
+	<form  method="get" id = "my_form1" th:action ="@{/AddProductToStore}" ></form>
+    <button type="submit" form="my_form1" >Add Product to Store</button>
+    <br></br>
+    <form  method="get" id = "my_form2" th:action ="@{/BuyVoucher}" ></form>
+    <button type="submit" form="my_form2" >Buy Voucher</button>
+    <br></br>
+    <form  method="get" id = "my_form3" th:action ="@{/Show-Stores}" ></form>
+    <button type="submit" form="my_form3" >Show Stores</button>
+    <br></br>
+    <form  method="post" id = "my_form4" th:action ="@{/ShowStatistics}" ></form>
+    <button type="submit" form="my_form4" >Show Statistics</button>
+    <br></br>
+    <form  method="post" id = "my_form5" th:action ="@{/Show-Stat}" ></form>
+    <button type="submit" form="my_form5" >Choose Statistics</button>
+    <br></br>
+    <form  method="get" id = "my_form6" th:action ="@{/AddCollaborator}" ></form>
+    <button type="submit" form="my_form6" >Add Collaborator</button>
+    <form  method="get" id = "my_form7" th:action ="@{/Welcome}" ></form>
+    <button type="submit" form="my_form7" >Log Out</button>
     
-    <form  action= "ShowStatistics2" method="post" id = "my_form1" th:action ="@{/ShowStatistics}" ></form>
-    
-    <button type="submit" form="my_form1" >Show Statistics</button>
-    
-    <form  action= "Show-StatOwner" method="post" id = "my_form2" th:action ="@{/Show-Stat}" ></form>
-    
-    <button type="submit" form="my_form2" >Choose Statistics</button>
 </body>
 </html>

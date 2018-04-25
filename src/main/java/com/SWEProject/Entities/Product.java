@@ -2,14 +2,18 @@ package com.SWEProject.Entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Product {
 	@Id
+	@NotNull
 	private String name;
 	private String category;
 	private String type;
+	@NotNull
 	private double priceUpperRange;
+	@NotNull
 	private double priceLowerRange;
 	public int getNumOfBuy() {
 		return numOfBuy;
@@ -18,6 +22,7 @@ public class Product {
 		this.numOfBuy = numOfBuy;
 	}
 	private int numOfBuy;
+	
 	public Product() {
 		name="";
 		category="";
@@ -27,13 +32,12 @@ public class Product {
 		numOfBuy=0;
 	}
 	public Product(String name, String category, String type, double priceUpperRange,
-			double priceLowerRange,int n) {
+			double priceLowerRange) {
 		this.name = name;
 		this.category = category;
 		this.type = type;
 		this.priceUpperRange = priceUpperRange;
 		this.priceLowerRange = priceLowerRange;
-		this.numOfBuy = n;
 	}
 	
 	public String getName() {

@@ -2,41 +2,48 @@ package com.SWEProject.Entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class SuggestedStore {
 	@Id
+	@NotNull
 	private String name;
 	private String type;
 	private String address;
+	@NotNull
 	private String link;
-	private Integer ownerid;
+	@OneToOne
+	@NotNull
+	private User owner;
 	public SuggestedStore() {
 		name = "";
 		type = "";
 		address = "";
 		link = "";
+		this.owner=new User();
 	}
-	public SuggestedStore(String name, String type, String link, Integer ownerid) {
-		super();
+	public SuggestedStore(String name, String type, String link, User owner) {
 		this.name = name;
 		this.type = type;
 		this.link = link;
-		this.ownerid = ownerid;
+		this.owner=new User();
+		this.owner = owner;
 	}
-	public SuggestedStore(String name, String type, String address, String link, Integer ownerid) {
-		super();
+	public SuggestedStore(String name, String type, String address, String link, User owner) {
 		this.name = name;
 		this.type = type;
 		this.address = address;
 		this.link = link;
-		this.ownerid = ownerid;
+		this.owner=new User();
+		this.owner = owner;
 	}
-	public Integer getOwnerid() {
-		return ownerid;
+	public User getOwner() {
+		return owner;
 	}
-	public void setOwnerid(Integer ownerid) {
-		this.ownerid = ownerid;
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 	public String getName() {
 		return name;

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>COLLABORATOR ACCOUNT</title>
+</head>
+<body>
+	<form  method="get" id = "my_form" th:action ="@{/AddProductToStore}" ></form>
+    <button type="submit" form="my_form" >Add Product to Store</button>
+    <br></br>
+    <form  method="get" id = "my_form1" th:action ="@{/BuyVoucher}" ></form>
+    <button type="submit" form="my_form1" >Buy Voucher</button>
+    <br></br>
+    <form  method="get" id = "my_form2" th:action ="@{/Show-Stores}" ></form>
+    <button type="submit" form="my_form2" >Show Stores</button>
+    <br></br>
+    <form  method="get" id = "my_form3" th:action ="@{/Welcome}" ></form>
+    <button type="submit" form="my_form3" >Log Out</button>
+
+</body>
+</html>

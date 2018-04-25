@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Stores</title>
 </head>
 <body>
-
-<form  action= "ShowProducts" method="get" id = "my_form" th:action ="@{/ShowProducts}" th:object="${store}"></form>
-
+	
+	
+	<form  method="get" id = "my_form" th:action ="@{/ShowProducts}" ></form>
+	<form   method="post" id = "my_form1" th:action ="@{/ShowStatistics}" ></form>
+	
+	
 <table border="1">
 <tr>
 	    <td>name</td>
@@ -23,8 +26,10 @@
 		
     <td> <button type="submit" form="my_form" th:value="*{store.name}" name="name">Show Store</button>
     </td>
+    <td> <button type="submit" form="my_form1" th:value="*{store.name}" name="name">Show Statistics</button>
+    </td>
     </tr>
 </table>
-
+	
 </body>
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Update Store Product</title>
+<script>
+
+function validate(){
+	var Price=document.form1.price.value;
+	var quantity=document.form1.quantity.value;
+	if(Price==""){
+		alert("Enter product price within its range please!");
+		return false;
+	}
+	var pat=/[0-9]/;
+	if(!pat.test(Price)){
+		alert("The price must be a number");
+		return false;
+	}
+	if( quantity==""){
+		alert("Enter product quantity please!");
+		return false;
+	}
+	if(!pat.test(quantity)){
+		alert("The quantity must be a number");
+		return false;
+	}
+	return true;
+}
+</script>
+
+</head>
+<body>
+	
+	<form method="post" th:action="@{/UpdateStoreProduct}" th:object="${storeproduct}" name="form1" onSubmit="return validate()">
+		<p>Name</p><input type="text" th:value="*{product.getName()}" readonly="readonly"/>
+		<p>Brand Name</p><input type="text" th:value="*{brand.getName()}" readonly="readonly"/>
+		<p>Store Name</p><input type="text" th:value="*{store.getName()}" readonly="readonly"/>
+		<p>Quantity</p><input type="number" name="quantity" th:value="*{quantity}"/>
+		<p>Price</p><input type="number" name="price" th:value="*{price}"/>
+		<br></br>
+		<input type="submit" value="submit" />
+		<br></br>
+	</form>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>STORE HISTORY</title>
+</head>
+<body>
+<form  method="post" id = "my_form" th:action ="@{/Undo}"></form>
+<form  method="post" id = "my_form1" th:action ="@{/DeleteCommand}"></form>
+
+<table border="1">
+	<tr>
+	    <td>Description</td>
+	    <td>Operation</td>
+	</tr>
+	<tr th:each="command: ${commands}">
+	    <td th:text ="${command.description}"></td>
+    <td> <button type="submit" form="my_form" th:value="*{command.id}" name="id">Undo</button>
+    <button type="submit" form="my_form1" th:value="*{command.id}" name="id">Delete</button>
+    </td>
+	</tr>
+</table>
+
+</body>
+</html>

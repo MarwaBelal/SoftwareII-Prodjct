@@ -1,34 +1,49 @@
 package com.SWEProject.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class StoresProducts {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected Integer id;
-	private String storename;
-	private String productname;
+	@ManyToOne
+	@NotNull
+	private Store store;
+	@OneToOne
+	@NotNull
+	private Product product;
+	@NotNull
 	private double price;
+	@NotNull
 	private int quantity;
 	private Integer numofbuys;
-	private String brandname; 
+	@OneToOne
+	@NotNull
+	private Brand brand;
+	@ManyToMany(cascade= CascadeType.ALL)
+	public Set<User> purchasers;
 	public StoresProducts() {
-		storename = "";
-		productname = "";
+		store = null;
+		product =null;
 		price=0;
 		numofbuys=0;
 		quantity=0;
+		brand=null;
+		purchasers=new HashSet<User>();
 	}
-	public StoresProducts(String storename, String productname, double price, int quantity) {
-		this.storename = storename;
-		this.productname = productname;
+	public StoresProducts(Store store, Product product, double price, int quantity, Brand brand) {
+		this.store = store;
+		this.product = product;
 		this.price = price;
 		this.quantity=quantity;
+		this.brand=brand;
 		numofbuys=0;
+		purchasers=new HashSet<User>();
 	}
 	public Integer getId() {
 		return id;
@@ -36,17 +51,17 @@ public class StoresProducts {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getStorename() {
-		return storename;
+	public Store getStore() {
+		return store;
 	}
-	public void setStorename(String storename) {
-		this.storename = storename;
+	public void setStore(Store store) {
+		this.store = store;
 	}
-	public String getProductname() {
-		return productname;
+	public Product getProduct() {
+		return product;
 	}
-	public void setProductname(String productname) {
-		this.productname = productname;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public double getPrice() {
 		return price;
@@ -74,10 +89,10 @@ public class StoresProducts {
 	public void setNumofbuys(Integer numofbuys) {
 		this.numofbuys = numofbuys;
 	}
-	public String getBrandname() {
-		return brandname;
+	public Brand getBrand() {
+		return brand;
 	}
-	public void setBrandname(String brandname) {
-		this.brandname = brandname;
+	public void setBrand(Brand brand) {
+		this.brand = brand;
 	}
 }

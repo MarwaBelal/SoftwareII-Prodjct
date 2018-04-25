@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<title>Add product App</title>
+<title>Products</title>
 </head>
 <body>
 
@@ -15,12 +15,12 @@
 	    <td>Category</td>
 	    <td>Price</td>
 	</tr>
-	<tr th:each="producttemplate: ${products1}">
-	    <td th:text ="${producttemplate.name}"></td>
-		<td th:text ="${producttemplate.type}"></td>
-		<td th:text ="${producttemplate.category}"></td>
-		<td th:text ="${producttemplate.price}"></td>
-    <td> <button type="submit" form="my_form" th:value="*{producttemplate.id}" name="id">Buy Product</button>
+	<tr th:each="product: ${products}">
+	    <td th:text ="${product.product.getName()}"></td>
+		<td th:text ="${product.product.getType()}"></td>
+		<td th:text ="${product.product.getCategory()}"></td>
+		<td th:text ="${product.price}"></td>
+    <td> <button type="submit" form="my_form" th:value="*{product.id}" name="id">Buy Product</button>
     </td>
 	</tr>
 </table>

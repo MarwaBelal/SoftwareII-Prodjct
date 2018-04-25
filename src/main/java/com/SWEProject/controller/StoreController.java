@@ -11,26 +11,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.SWEProject.Entities.Product;
+
 import com.SWEProject.Entities.Statistics;
 import com.SWEProject.Entities.Store;
 import com.SWEProject.Entities.StoreOwner;
-import com.SWEProject.Entities.StoresProducts;
+
 import com.SWEProject.Entities.SuggestedStore;
+import com.SWEProject.Entities.User;
 import com.SWEProject.Repositories.StatRepository;
 import com.SWEProject.Repositories.StoreRepository;
-import com.SWEProject.Repositories.StoresProductsRepository;
+
 import com.SWEProject.Repositories.SuggestedStoreRepository;
 
 @Controller
 public class StoreController {
-	StoreOwner storeOwner;
 	@Autowired
 	private StoreRepository repo;
 	@Autowired
 	private SuggestedStoreRepository repoSug;
-	@Autowired
-	private StoresProductsRepository Srepo;
 	@Autowired
 	private StatRepository Statrepo;
 	@GetMapping("/AddStore")
@@ -40,9 +38,8 @@ public class StoreController {
 	}
 	@PostMapping("/AddStore")
 	public String addStore(Model model, @ModelAttribute SuggestedStore suggestedstore) {
-		storeOwner=(StoreOwner)UserController.currentUser;
-		if(!repoSug.exists(suggestedstore.getName()) && storeOwner.getType().equals("storeowner")) {
-			suggestedstore.setOwnerid(storeOwner.getId());
+		if(!repoSug.exists(suggestedstore.getName()) && UserController.currentUser.getType().equals("storeowner")) {
+			suggestedstore.setOwner(UserController.currentUser);
 			repoSug.save(suggestedstore);
 			model.addAttribute("suggestedstore", new SuggestedStore());
 			return "StoreOwner";
@@ -73,7 +70,7 @@ public class StoreController {
 		SuggestedStore tmp=new SuggestedStore();
 		if(!repo.exists(name)) {
 			tmp=repoSug.findOne(name);
-			Store newStore = new Store(tmp.getName(),tmp.getType(),tmp.getAddress(),tmp.getLink(),tmp.getOwnerid());
+			Store newStore = new Store(tmp.getName(),tmp.getType(),tmp.getAddress(),tmp.getLink(),tmp.getOwner());
 			repo.save(newStore);
 		}
 		repoSug.delete(name);
@@ -83,6 +80,17 @@ public class StoreController {
 	@GetMapping("/Show-Stores")
 	public String ShowStores(Model model)
 	{
+		if(UserController.currentUser.getType().equals("storeowner")) {
+			List <Store> stores=repo.findByOwner(UserController.currentUser);
+			model.addAttribute("stores", stores);
+			return "ShowStatistics";
+		}
+		else if(UserController.currentUser.isCollabrated()==true)
+		{
+			List <Store> stores=repo.findByCollaborators(UserController.currentUser);
+			model.addAttribute("stores", stores);
+			return "ShowStoresCollaborator";
+		}
 		Iterable <Store> storeIterable=repo.findAll();
 		ArrayList <Store> Storelist = new ArrayList<Store>();
 		for( Store store : storeIterable )
@@ -91,27 +99,6 @@ public class StoreController {
 		}
 		model.addAttribute("stores", Storelist);
 		return "Show-Stores";
-	}
-	
-	@GetMapping("/Show-Stores1")
-	public String ShowStores1(Model model)
-	{
-		Iterable <Store> storeIterable=repo.findAll();
-		ArrayList <Store> Storelist = new ArrayList<Store>();
-		for( Store store : storeIterable )
-		{
-			Storelist.add(store);
-		}
-		ArrayList<Store>storeowner= new ArrayList<Store>();
-		for( int i=0 ; i<Storelist.size() ; i++ )
-		{
-			if(UserController.currentUser.getId()==Storelist.get(i).getOwnerid())
-			{
-				storeowner.add(Storelist.get(i));
-			}
-		}
-		model.addAttribute("stores1", storeowner);
-		return "ShowStatistics";
 	}
 	
 	@Autowired

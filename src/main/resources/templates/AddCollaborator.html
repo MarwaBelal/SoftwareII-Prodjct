@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ADD COLLABORATOR TO STORE</title>
+<script>
+
+function validate(){
+	var Name=document.form1.userid.value;
+	var store=document.form1.storename.value;
+	if( Name==""){
+		alert("Enter user ID please!");
+		return false;
+	}
+	if( store==""){
+		alert("Choose a store please!");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<td>ID</td>
+			<td>User name</td>
+			<td>Email</td>
+		</tr>
+		<tr th:each="user :${users}">
+			<td th:text="${user.id}">name </td>
+			<td th:text="${user.username}">category </td>
+			<td th:text="${user.email}">type </td>
+		</tr>
+		
+	</table>
+	<form method="post" th:action="@{/AddCollaborator}"  name="form1" onSubmit="return validate()">
+		<p>User ID : </p><input type="number" name="userid" />
+		<br></br>
+		<p>Select store</p>
+		<select name="storename" >
+			<option value="">-</option>
+  			<option th:each="store :${stores}" th:text="${store.name}" th:value="${store.name}"></option>
+		</select>
+		<br></br>
+		<input type="submit" value="Add To Store" />
+		<br></br>
+	</form>
+
+</body>
+</html>

@@ -26,11 +26,9 @@ public class BrandController {
 		boolean ifExist=repo.exists(brand.getName());
 		if(ifExist==false) {
 			repo.save(brand);
-			//model.addAttribute("brand", new Brand());
 			return "Admin";
 		}
 		model.addAttribute("brand", new Brand());
 		return "AddBrand";
 	}
-	
 }
